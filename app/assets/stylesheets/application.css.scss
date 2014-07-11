@@ -10,6 +10,17 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+@import "compass/css3";
+
+@import "_zurb_settings";
+@import "foundation";
+@import "foundation-icons";
+
+@import "utils/_vars";
+@import "partials/_base";
+@import "partials/_breadcrumbs";
+@import "partials/_images";
+@import "screens/header";
+@import "screens/people";
+@import "screens/footer";
