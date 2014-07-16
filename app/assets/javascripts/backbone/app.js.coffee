@@ -12,17 +12,20 @@
 
   App
 
+@MuLg.module "Controllers", (Controllers, App, Backbone, Marionette, $, _) ->
+  class Controllers.Base extends Marionette.Controller
+    constructor: (options = {}) ->
+      @region = options.region
+      super options
 
-@MuLg.module "HeaderApp", (Header, App, Backbone, Marionetter, $, _) ->
+
+@MuLg.module "HeaderApp", (Header, App, Backbone, Marionette, $, _) ->
   @startWithParent = false
 
   class Header.View extends Marionette.ItemView
     template: "backbone/templates/header_template"
 
-  class Header.Controller extends Marionette.Controller
-    constructor: (options = {}) ->
-      @region = options.region
-      super options
+  class Header.Controller extends App.Controllers.Base
 
     initialize: ->
       @view = new Header.View
@@ -39,10 +42,7 @@
   class Footer.View extends Marionette.ItemView
     template: "backbone/templates/footer_template"
 
-  class Footer.Controller extends Marionette.Controller
-    constructor: (options = {}) ->
-      @region = options.region
-      super options
+  class Footer.Controller extends App.Controllers.Base
 
     initialize: ->
       @view = new Footer.View
