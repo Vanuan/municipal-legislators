@@ -1,0 +1,10 @@
+<div id="people-list">
+  <div id="title-region"></div>
+  <section>
+    <div id="panel-region"></div>
+    <div id="new-region"></div>
+  </section>
+  <section>
+    <div id="people-region"></div>
+  </section>
+</div>
