@@ -26,7 +26,7 @@ gem "js-routes"
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
-gem 'spring',        group: :development
+gem 'spring', '~> 1.1.3',       group: :development
 
 gem "eco"
 gem "compass-rails"

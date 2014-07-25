@@ -75,8 +75,28 @@
   class PeopleApp.PanelView extends Marionette.ItemView
     template: "backbone/templates/panel_template"
 
-  class PeopleApp.PeopleView extends Marionette.ItemView
+
+  class PeopleApp.PeopleView extends Marionette.CompositeView
     template: "backbone/templates/people_template"
+    childView: PeopleApp.PersonView
+    emptyView: PeopleApp.PeopleEmptyView
+
+  class PeopleApp.PeopleEmptyView extends Marionette.ItemView
+    template: "backbone/templates/people_empty"
+
+  class PeopleApp.PersonView extends Marionette.ItemView
+    template: "backbone/templates/people_template"
+
+  class PeopleApp.Person extends Backbone.Model
+
+  class PeopleApp.People extends Backbone.Collection
+    model: PeopleApp.Person
+    url: -> "/people"
+
+  App.reqres.setHandler "people:entities",  ->
+    people = new PeopleApp.People
+    people.fetch
+      reset: true
 
   class PeopleApp.LayoutController extends App.Controllers.Base
 
@@ -89,10 +109,21 @@
       @layoutView.newRegion.show @newView
       @panelView = new PeopleApp.PanelView
       @layoutView.panelRegion.show @panelView
-      @peopleView = new PeopleApp.PeopleView
-      @layoutView.peopleRegion.show @peopleView
+
+      people = App.request "people:entities"
+      App.execute "when:fetched", people, =>
+        console.log "fetched"
+        @peopleView = new PeopleApp.PeopleView
+          collection: people
+        @layoutView.peopleRegion.show @peopleView
 
   PeopleApp.on "start", ->
     new PeopleApp.LayoutController
       region: App.mainRegion
 
+
+  App.commands.setHandler "when:fetched", (entities, callback) ->
+    xhrs = _.chain([entities]).flatten().pluck("_fetch").value()
+
+    $.when(xhrs...).done ->
+      callback()
