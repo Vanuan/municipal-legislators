@@ -1,0 +1,69 @@
+<div class="row" ng-show="!people.length">
+    <div class="large-12 columns text-center">
+        <div class="panel radius">
+            <h2>
+                <small>База пуста!</small>
+            </h2>
+            <p class="subheader">Добавь депутата.</p>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="large-12 columns">
+        <div class="row">
+            <ul class="large-12 columns">
+                <li class="person" ng-repeat="person in people">
+                    <div class="large-3 columns text-center" ng-show="person.image">
+                        <a class="th radius" href="#">
+                            <img ng-src="{{person.image}}" />
+                        </a>
+                    </div>
+                    <div class="large-9 columns stats-container">
+                        <div class="row">
+                            <div class="large-6 columns">
+                                <div class="row">
+                                    <div class="large-5 columns attribute-label">Имя</div>
+                                    <div class="large-7 columns">{{person.name}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="large-5 columns attribute-label">Возраст</div>
+                                    <div class="large-7 columns">{{person.age}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="large-5 columns attribute-label">Должность</div>
+                                    <div class="large-7 columns">{{person.position}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="large-5 columns attribute-label">Партийность</div>
+                                    <div class="large-7 columns">{{person.party}}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="large-5 columns attribute-label">Место рождения</div>
+                                    <div class="large-7 columns">{{person.place_of_birth}}</div>
+                                </div>
+                            </div>
+                            <div class="large-6 columns">
+                                <blockquote>
+                                    <ul class="large-block-grid-2 text-center stats">
+                                        <li>
+                                            <div>
+                                                <span class="label round">{{person.related_documents}}</span>
+                                            </div>
+                                            <div class="stat-type">Связанных документов</div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <span class="label round">{{person.media_stories}}</span>
+                                            </div>
+                                            <div class="stat-type">Упоминаний в СМИ</div>
+                                        </li>
+                                    </ul>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
