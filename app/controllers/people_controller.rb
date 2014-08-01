@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
 
   def index
     @people = Person.all
-    render json: @people
+    render "people/index"
   end
 
 end
