@@ -1,4 +1,5 @@
-var app = angular.module('OpenMunicData', []);
+(function(){
+var app = angular.module('OpenMunicData', ['ngResource']);
 
 app.
     config(['$routeProvider', function($routeProvider) {
@@ -8,27 +9,20 @@ app.
                     return "/people";
                 }
             }).
-            when('/people', {templateUrl: 'templates/people.html', controller: PeopleCtrl})
+            when('/people', {templateUrl: 'templates/people.html', controller: 'PeopleCtrl'})
     }]);
 
-function PeopleCtrl($scope, PeopleService) {
-    PeopleService.getPeople().then(function onPeople(people) {
+app.factory('PeopleService', ['$resource', function($resource) {
+      return $resource('people.json', {}, {
+        query: {method:'GET', params:{}, isArray:true}
+      });
+}]);
+
+app.controller('PeopleCtrl', ['$scope', 'PeopleService', function($scope, PeopleService) {
+    PeopleService.query(function (people) {
         $scope.people = people;
     });
-}
+}]);
 
-app.factory('PeopleService', function($q, $rootScope) {
-    return {
-        getPeople: function getPeople() {
-            var deferred = $q.defer();
-            $rootScope.$broadcast('Loading');
-            $.get("/people.json", function cb(people) {
-                $rootScope.$apply(function () {deferred.resolve(people)});
-            }).fail(function onError(error) {
-                $rootScope.$apply(function () {deferred.reject()});
-                $rootScope.$broadcast('APIError', error);
-            });
-            return deferred.promise;
-        }
-    };
-});
+
+})();
